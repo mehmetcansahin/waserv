@@ -1,0 +1,21 @@
+[package]
+name = "webworker"
+version = "0.1.0"
+authors = ["mehmetcansahin <sahinmcan@gmail.com>"]
+description = "HTML Purifier"
+license = "MIT"
+readme = "README.md"
+documentation = "https://docs.rs/webworker"
+repository = "https://github.com/mehmetcansahin/webworker"
+keywords = ["web", "worker"]
+categories = ["web-programming"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+web-sys = { version = "0.3", features = ["ExtendableEvent", "Request", "Response", "ResponseInit", "Headers", "Url"] }
+path-tree = "0.1"
+serde = { version = "1.0", features = ["derive"] }
+serde_derive = "1.0"
+serde_json = "1.0"

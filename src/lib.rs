@@ -1,6 +1,5 @@
 use response::response;
 use router::Router;
-use serde_json::json;
 use web_sys::{Request, Response, Url};
 
 #[macro_use]
@@ -33,13 +32,9 @@ impl WebWorker {
                 node(request, params)
             }
             None => {
-                let data = json!({
-                    "status": "Not Found",
-                    "code": 404
-                });
-                let body = serde_json::to_string(&data).unwrap();
+                let body = "404 - Not Found".to_string();
                 let headers = headers! {
-                    "Content-Type" => "application/json",
+                    "Content-Type" => "text/html; charset=UTF-8",
                     "Cache-Control" => "no-cache"
                 };
                 response(body, headers, Some(404))

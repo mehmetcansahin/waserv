@@ -7,6 +7,7 @@ pub mod macros;
 pub mod response;
 pub mod router;
 
+pub type Handler = Box<dyn Fn(Request, Params) -> Response>;
 pub type Params = Vec<(String, String)>;
 
 pub struct WebWorker {
@@ -22,7 +23,7 @@ impl WebWorker {
 
     pub fn handle(&self, request: Request) -> Response {
         let url = Url::new(&request.url()).unwrap();
-        let path = "/".to_owned() + request.method().as_str() + &url.pathname();
+        let path = format!("/{}{}", request.method().as_str(), &url.pathname());
         match self.router.tree.find(&path) {
             Some((node, params)) => {
                 let params = params

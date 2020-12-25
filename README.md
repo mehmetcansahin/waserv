@@ -11,11 +11,26 @@ Request -> CF Worker -> WebWorker -> Response
 ## Example
 
 ```rust
-let mut router = Router::new();
-router.get("/", Box::new(index));
-let mut ww = WebWorker::new();
-ww.mount(router);
-ww.handle(request)
+use web_sys::{Request, Response, Headers};
+use webworker::{response::response, router::Router, Params, WebWorker};
+
+fn index(_request: Request, _params: Params) -> Response {
+    let body = "Hello, World!".to_string();
+    let headers = Headers::new().unwrap();
+    headers
+        .set("Content-Type", "text/html; charset=UTF-8")
+        .unwrap();
+    headers.set("Cache-Control", "no-cache").unwrap();
+    response(body, headers, Some(200))
+}
+
+fn handle(request: Request) -> Response {
+    let mut router = Router::new();
+    router.get("/", Box::new(index));
+    let mut ww = WebWorker::new();
+    ww.mount(router);
+    ww.handle(request)
+}
 ```
 
 ## Test

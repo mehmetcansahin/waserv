@@ -1,7 +1,7 @@
 //! WebWorker is a simple web server for a worker optimize
 //!
 //! # Example
-//! ```
+//! ```no_run
 //! let mut router = Router::new();
 //! router.get("/", Box::new(index));
 //! let mut ww = WebWorker::new();

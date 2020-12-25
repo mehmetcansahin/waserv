@@ -1,5 +1,6 @@
 use web_sys::{Headers, Response, ResponseInit};
 
+/// Response
 pub fn response(body: String, headers: Headers, status: Option<u16>) -> Response {
     Response::new_with_opt_str_and_init(
         Some(&body),
@@ -10,6 +11,7 @@ pub fn response(body: String, headers: Headers, status: Option<u16>) -> Response
     .unwrap()
 }
 
+/// JSON Response
 pub fn json(body: String) -> Response {
     let headers = headers! {
         "Content-Type" => "text/json",

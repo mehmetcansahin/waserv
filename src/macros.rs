@@ -1,5 +1,5 @@
 #[macro_export]
-macro_rules! headers(
+macro_rules! headers{
     { $($key:expr => $value:expr),+ } => {
         {
             use web_sys::Headers;
@@ -11,4 +11,4 @@ macro_rules! headers(
         }
      };
      () => { Headers::new().unwrap() };
-);
+}

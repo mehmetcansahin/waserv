@@ -1,3 +1,15 @@
+//! WebWorker is a simple web server for a worker optimize
+//!
+//! # Example
+//! ```
+//! let mut router = Router::new();
+//! router.get("/", Box::new(index));
+//! let mut ww = WebWorker::new();
+//! ww.mount(router);
+//! ww.handle(request)
+//! ```
+//!
+
 use response::response;
 use router::Router;
 use web_sys::{Request, Response, Url};
@@ -7,11 +19,11 @@ pub mod macros;
 pub mod response;
 pub mod router;
 
-pub type Handler = Box<dyn Fn(Request, Params) -> Response>;
 pub type Params = Vec<(String, String)>;
+type Handler = Box<dyn Fn(Request, Params) -> Response>;
 
 pub struct WebWorker {
-    pub(crate) router: Router,
+    router: Router,
 }
 
 impl WebWorker {
@@ -25,12 +37,12 @@ impl WebWorker {
         let url = Url::new(&request.url()).unwrap();
         let path = format!("/{}{}", request.method().as_str(), &url.pathname());
         match self.router.tree.find(&path) {
-            Some((node, params)) => {
+            Some((func, params)) => {
                 let params = params
                     .iter()
                     .map(|p| (p.0.to_string(), p.1.to_string()))
                     .collect::<Params>();
-                node(request, params)
+                func(request, params)
             }
             None => {
                 let body = "404 - Not Found".to_string();

@@ -1,18 +1,18 @@
-# WebWorker - work in progress
+# Waserv - work in progress
 
-[![crates.io](https://img.shields.io/crates/v/webworker.svg)](https://crates.io/crates/webworker)
-[![Released API docs](https://docs.rs/webworker/badge.svg)](https://docs.rs/webworker)
-[![GHA Build Status](https://github.com/mehmetcansahin/webworker/workflows/CI/badge.svg)](https://github.com/mehmetcansahin/webworker/actions?query=workflow%3ACI)
+[![crates.io](https://img.shields.io/crates/v/waserv.svg)](https://crates.io/crates/waserv)
+[![Released API docs](https://docs.rs/waserv/badge.svg)](https://docs.rs/waserv)
+[![GHA Build Status](https://github.com/mehmetcansahin/waserv/workflows/CI/badge.svg)](https://github.com/mehmetcansahin/waserv/actions?query=workflow%3ACI)
 
-WebWorker is a simple web server for a wasm
+Waserv is a simple web server for a wasm
 
-Request -> CF Worker -> WebWorker -> Response
+Request -> CF Worker -> Waserv -> Response
 
 ## Example
 
 ```rust
 use web_sys::{Request, Response, Headers};
-use webworker::{response::response, router::Router, Params, WebWorker};
+use waserv::{response::response, router::Router, Params, Waserv};
 
 fn index(_request: Request, _params: Params) -> Response {
     let body = "Hello, World!".to_string();
@@ -27,7 +27,7 @@ fn index(_request: Request, _params: Params) -> Response {
 fn handle(request: Request) -> Response {
     let mut router = Router::new();
     router.get("/", Box::new(index));
-    let mut ww = WebWorker::new();
+    let mut ww = Waserv::new();
     ww.mount(router);
     ww.handle(request)
 }

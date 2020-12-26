@@ -1,12 +1,12 @@
 [package]
-name = "webworker"
+name = "waserv"
 version = "0.1.4"
 authors = ["mehmetcansahin <sahinmcan@gmail.com>"]
-description = "WebWorker"
+description = "waserv"
 license = "MIT"
 readme = "README.md"
-documentation = "https://docs.rs/webworker"
-repository = "https://github.com/mehmetcansahin/webworker"
+documentation = "https://docs.rs/waserv"
+repository = "https://github.com/mehmetcansahin/waserv"
 keywords = ["web", "worker"]
 categories = ["web-programming"]
 edition = "2018"

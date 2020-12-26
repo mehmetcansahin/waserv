@@ -1,6 +1,6 @@
+use waserv::{response::response, router::Router, Params, Waserv};
 use wasm_bindgen_test::*;
 use web_sys::{Headers, Request, RequestInit, Response};
-use webworker::{response::response, router::Router, Params, WebWorker};
 
 fn index(_request: Request, _params: Params) -> Response {
     let body = "Hello, World!".to_string();
@@ -15,7 +15,7 @@ fn index(_request: Request, _params: Params) -> Response {
 #[wasm_bindgen_test]
 fn handle_index() {
     wasm_bindgen_test::wasm_bindgen_test_configure!(run_in_browser);
-    let mut ww = WebWorker::new();
+    let mut ww = Waserv::new();
     let mut router = Router::new();
     router.get("/", Box::new(index));
     ww.mount(router);
@@ -35,7 +35,7 @@ fn handle_index() {
 #[wasm_bindgen_test]
 fn handle_not_found() {
     wasm_bindgen_test::wasm_bindgen_test_configure!(run_in_browser);
-    let mut ww = WebWorker::new();
+    let mut ww = Waserv::new();
     let mut router = Router::new();
     router.get("/", Box::new(index));
     ww.mount(router);

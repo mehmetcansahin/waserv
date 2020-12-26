@@ -1,9 +1,9 @@
-//! WebWorker is a simple web server for a worker optimize
+//! Waserv is a simple web server for a worker optimize
 //!
 //! # Example
 //! ```no_run
 //! use web_sys::{Request, Response, Headers};
-//! use webworker::{response::response, router::Router, Params, WebWorker};
+//! use waserv::{response::response, router::Router, Params, Waserv};
 //!
 //! fn index(_request: Request, _params: Params) -> Response {
 //!     let body = "Hello, World!".to_string();
@@ -18,7 +18,7 @@
 //! fn handle(request: Request) -> Response {
 //!     let mut router = Router::new();
 //!     router.get("/", Box::new(index));
-//!     let mut ww = WebWorker::new();
+//!     let mut ww = Waserv::new();
 //!     ww.mount(router);
 //!     ww.handle(request)
 //! }
@@ -37,13 +37,13 @@ pub mod router;
 pub type Params = Vec<(String, String)>;
 type Handler = Box<dyn Fn(Request, Params) -> Response>;
 
-pub struct WebWorker {
+pub struct Waserv {
     router: Router,
 }
 
-impl WebWorker {
-    pub fn new() -> WebWorker {
-        WebWorker {
+impl Waserv {
+    pub fn new() -> Waserv {
+        Waserv {
             router: Router::new(),
         }
     }

@@ -6,7 +6,7 @@
 
 Waserv is a simple web server for a wasm
 
-Request -> CF Worker -> Waserv -> Response
+Request -> Cloudflare Worker -> Waserv -> Response
 
 ## Example
 

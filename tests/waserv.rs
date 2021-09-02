@@ -12,6 +12,17 @@ fn index(_request: Request, _params: Params) -> Response {
     response(body, headers, Some(200))
 }
 
+fn hello(_request: Request, params: Params) -> Response {
+    let name = &params.iter().find(|param| param.0.eq("name")).unwrap().1;
+    let body = format!("Hello, {}!", name);
+    let headers = Headers::new().unwrap();
+    headers
+        .set("Content-Type", "text/html; charset=UTF-8")
+        .unwrap();
+    headers.set("Cache-Control", "no-cache").unwrap();
+    response(body, headers, Some(200))
+}
+
 #[wasm_bindgen_test]
 fn handle_index() {
     wasm_bindgen_test::wasm_bindgen_test_configure!(run_in_browser);
@@ -22,6 +33,26 @@ fn handle_index() {
     let mut request_init = RequestInit::new();
     request_init.method("GET");
     let request = Request::new_with_str_and_init("http://localhost", &request_init);
+    let status = match request {
+        Ok(req) => {
+            let resp = ww.handle(req);
+            resp.status()
+        }
+        Err(_) => 500,
+    };
+    assert_eq!(status, 200)
+}
+
+#[wasm_bindgen_test]
+fn handle_hello() {
+    wasm_bindgen_test::wasm_bindgen_test_configure!(run_in_browser);
+    let mut ww = Waserv::new();
+    let mut router = Router::new();
+    router.get("/hello/:name", Box::new(hello));
+    ww.mount(router);
+    let mut request_init = RequestInit::new();
+    request_init.method("GET");
+    let request = Request::new_with_str_and_init("http://localhost/hello/mehmetcan", &request_init);
     let status = match request {
         Ok(req) => {
             let resp = ww.handle(req);
